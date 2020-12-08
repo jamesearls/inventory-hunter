@@ -19,8 +19,8 @@ class AmazonScrapeResult(ScrapeResult):
         if price_str:
             alert_subject = f'In Stock for {price_str}'
 
-        # check for add to basket button
-        tag = self.soup.body.select_one('span.a-button-inner > span#submit\\.add-to-basket-announce')
+        # check for add to cart button
+        tag = self.soup.body.select_one('span.a-button-inner > span#submit\\.add-to-cart-announce')
         if tag and 'add to basket' in tag.text.lower():
             self.alert_subject = alert_subject
             self.alert_content = f'{alert_content.strip()}\n{self.url}'
