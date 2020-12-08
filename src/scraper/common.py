@@ -3,9 +3,6 @@ import logging
 import pathlib
 import html
 
-# required for price parsing logic
-locale.setlocale(locale.LC_ALL, '')
-
 from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 
@@ -40,7 +37,6 @@ class ScrapeResult(ABC):
             return None
         else:
             price_str = tag.text.strip()
-        
         price_str = html.unescape(price_str).strip()
         if not price_str:
             return
@@ -62,7 +58,6 @@ class GenericScrapeResult(ScrapeResult):
         # not perfect but usually good enough
         if self.has_phrase('aggiungi al carrello') or self.has_phrase('in den einkaufswagen') \
                 or self.has_phrase('añadir a la cesta') or self.has_phrase('ajouter au panier')\
-                or self.has_phrase('add to basket'):
                 or self.has_phrase('add to basket') or self.has_phrase('add to cart'):
             self.alert_subject = 'In Stock'
             self.alert_content = self.url
